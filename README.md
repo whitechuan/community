@@ -1,17 +1,18 @@
 ## 白蚁社区
 
 ## 资料
-https://spring.io
+[spring 文档](https://spring.io)
 
-https://spring.io/guides/gs/serving-web-content/
+[spring-web](https://spring.io/guides/gs/serving-web-content/)
 
+[模仿社区网站](https://elasticsearch.cn)
 
+[github Creating a GitHub App](https://developer.github.com/apps/building-github-apps/creating-a-github-app/)
 ## 工具
 git
 
 ## git 命令
  追加   git commit --amend --no-edit
- 
 ### 报错
     hint: Updates were rejected because the remote contains work that you do
     hint: not have locally. This is usually caused by another repository pushing
@@ -30,4 +31,5 @@ git
     如果还想要远程分支上的提交:
     git新版本的使用旧的pull命令:$ git pull origin master并不会解决问题,需要改为:
     git pull origin master --allow-unrelated-histories
-   
+
+  

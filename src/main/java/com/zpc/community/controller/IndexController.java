@@ -14,11 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @Author:zpc@qq.com
  */
 @Controller
-public class HelloController {
-    @RequestMapping("/hello")
-    public String hello(@RequestParam("name") String name, Model model){
-
-        model.addAttribute("name", name);
-        return "hello";
+public class IndexController {
+    @RequestMapping({"/","/index"})
+    public String index(){
+        return "index";
     }
 }
