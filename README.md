@@ -32,4 +32,37 @@ git
     git新版本的使用旧的pull命令:$ git pull origin master并不会解决问题,需要改为:
     git pull origin master --allow-unrelated-histories
 
-  
+
+
+```sql
+create table user
+(
+	id int auto_increment,
+	name varchar(100) null,
+	accout_id varchar(50) null,
+    token varchar(36) null,
+	gmt_create bigint null,
+	gmt_modified bigint null,
+	bio varchar(256) null,
+	constraint user_pk
+		primary key (id)
+);
+
+
+create table question
+(
+	id int auto_increment,
+	title varchar(50) null,
+	description text null,
+	gmt_create bigint null,
+	gmt_modified bigint null,
+	creator int null,
+	comment_count int default 0 null,
+	view_count int default 0 null,
+	like_count int default 0 null,
+	tag varchar(256) null,
+	constraint question_pk
+		primary key (id)
+);
+
+```

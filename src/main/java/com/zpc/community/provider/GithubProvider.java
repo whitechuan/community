@@ -56,8 +56,6 @@ public class GithubProvider {
         } catch (IOException e) {
             e.printStackTrace();
             response.close();
-        }finally {
-            response.close();
         }
         return null;
     }
