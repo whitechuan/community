@@ -1,7 +1,9 @@
 package com.zpc.community.controller;
 
+import com.zpc.community.dto.PaginationDTO;
 import com.zpc.community.entity.User;
 import com.zpc.community.mapper.UserMapper;
+import com.zpc.community.service.QuesstionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,21 +25,28 @@ import javax.servlet.http.HttpServletRequest;
 public class IndexController {
     @Autowired
     private UserMapper userMapper;
-
+    @Autowired
+    private QuesstionService quesstionServic;
     @RequestMapping({"/","/index"})
-    public String index(HttpServletRequest request){
+    public String index(HttpServletRequest request,
+                        Model model,
+                        @RequestParam(name = "page",defaultValue = "1") Integer page,
+                        @RequestParam(name = "size",defaultValue = "3") Integer size){
         Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("token")){
-                String token = cookie.getValue();
-                User user = userMapper.findByToken(token);
-                if (user != null){
-                    request.getSession().setAttribute("user", user);
+        if (cookies != null && cookies.length !=0) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("token")) {
+                    String token = cookie.getValue();
+                    User user = userMapper.findByToken(token);
+                    if (user != null) {
+                        request.getSession().setAttribute("user", user);
+                    }
+                    break;
                 }
-                break;
             }
+            PaginationDTO paginationDTO = quesstionServic.quesstionList(page, size);
+            model.addAttribute("paginationDTO", paginationDTO);
         }
-
         return "index";
     }
 }
