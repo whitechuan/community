@@ -3,8 +3,8 @@ package com.zpc.community.controller;
 import com.zpc.community.dto.AccessTokenDTO;
 import com.zpc.community.dto.GithubUser;
 import com.zpc.community.entity.User;
-import com.zpc.community.mapper.UserMapper;
 import com.zpc.community.provider.GithubProvider;
+import com.zpc.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -37,7 +37,7 @@ public class AuthorizeController {
     private String redirectUri;
 
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
 
     @GetMapping("/callback")
     public String callBack(@RequestParam(name="code") String code,
@@ -57,15 +57,25 @@ public class AuthorizeController {
             String token = user.getToken();
             user.setName(githubUser.getName());
             user.setAccountId(String.valueOf(githubUser.getId()));
-            user.setGmtCreate(System.currentTimeMillis());
-            user.setGmtModified(user.getGmtCreate());
+
             user.setAvatarUrl(githubUser.getAvatar_url());
-            userMapper.insert(user);
+            userService.createOrUpdate(user);
             response.addCookie(new Cookie("token", token));
             return "redirect:/index";
         }else {
             //登录失败
             return "redirect:/index";
         }
+    }
+    @GetMapping("/logout")
+    public String logout(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ){
+        request.getSession().removeAttribute("user");
+        Cookie cookie = new Cookie("token",null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        return "redirect:/index";
     }
 }

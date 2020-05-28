@@ -1,17 +1,18 @@
-package com.zpc.community.entity;
+package com.zpc.community.dto;
 
+import com.zpc.community.entity.User;
 import lombok.Data;
 
 /**
- * ClassName: Quesstion
- * Package: com.zpc.community.entity
+ * ClassName: QuesstionDTO
+ * Package: com.zpc.community.dto
  * Description:
  *
- * @Date: 2020/5/21 18:00
+ * @Date: 2020/5/24 12:02
  * @Author:zpc@qq.com
  */
 @Data
-public class Quesstion {
+public class QuestionDTO {
     private Integer id;
     private String title;
     private String description;
@@ -23,4 +24,5 @@ public class Quesstion {
     private Integer likeCount;
     private String tag;
 
+    private User user;
 }

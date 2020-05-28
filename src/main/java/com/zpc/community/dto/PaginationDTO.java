@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Data
 public class PaginationDTO {
-    private List<QuesstionDTO> quesstions;
+    private List<QuestionDTO> quesstions;
     private boolean showPrevious;
     private boolean showFirstPage;
     private boolean showNext;
@@ -25,18 +25,9 @@ public class PaginationDTO {
     private Integer page;
     private List<Integer> pages = new ArrayList<>();
 
-    public void setPagination(Integer totalCount, Integer page, Integer size) {
-        if (totalCount % size == 0) {
-            totalPage = totalCount / size;
-        } else {
-            totalPage = totalCount / size + 1;
-        }
-        if (page < 1){
-            page=1;
-        }
-        if (page>totalPage){
-            page=totalPage;
-        }
+    public void setPagination(Integer totalPage, Integer page) {
+
+        this.totalPage = totalPage;
         this.page = page;
 
         pages.add(page);
