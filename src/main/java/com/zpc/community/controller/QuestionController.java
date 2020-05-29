@@ -1,6 +1,7 @@
 package com.zpc.community.controller;
 
 import com.zpc.community.dto.QuestionDTO;
+import com.zpc.community.mapper.QuestionMapper;
 import com.zpc.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,8 @@ public class QuestionController {
             Model model
     ){
         QuestionDTO questionDTO = questionService.getById(id);
+        //累加阅读数
+        questionService.incView(id);
         model.addAttribute("question", questionDTO);
         return "question";
     }

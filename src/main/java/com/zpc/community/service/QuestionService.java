@@ -8,6 +8,7 @@ import com.zpc.community.entity.User;
 import com.zpc.community.exception.CustomizeErrorCode;
 import com.zpc.community.exception.CustomizeException;
 import com.zpc.community.mapper.QuestionMapper;
+import com.zpc.community.mapper.QuestionMapperExt;
 import com.zpc.community.mapper.UserMapper;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
@@ -31,7 +32,8 @@ public class QuestionService {
     private UserMapper userMapper;
     @Autowired
     private QuestionMapper questionMapper;
-
+    @Autowired
+    private QuestionMapperExt questionMapperExt;
     public PaginationDTO quesstionList(Integer page, Integer size) {
         Integer totalPage;
         PaginationDTO paginationDTO = new PaginationDTO();
@@ -142,5 +144,12 @@ public class QuestionService {
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
         }
+    }
+
+    public void incView(Integer id) {
+        Question questionUpdateRecord = new Question();
+        questionUpdateRecord.setId(id);
+        questionUpdateRecord.setViewCount(1);
+        questionMapperExt.incView(questionUpdateRecord);
     }
 }
