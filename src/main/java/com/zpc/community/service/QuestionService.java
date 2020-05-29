@@ -5,6 +5,8 @@ import com.zpc.community.dto.QuestionDTO;
 import com.zpc.community.entity.Question;
 import com.zpc.community.entity.QuestionExample;
 import com.zpc.community.entity.User;
+import com.zpc.community.exception.CustomizeErrorCode;
+import com.zpc.community.exception.CustomizeException;
 import com.zpc.community.mapper.QuestionMapper;
 import com.zpc.community.mapper.UserMapper;
 import org.apache.ibatis.session.RowBounds;
@@ -109,6 +111,9 @@ public class QuestionService {
 
     public QuestionDTO getById(Integer id) {
         Question quesstion = questionMapper.selectByPrimaryKey(id);
+        if (quesstion == null){
+            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+        }
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(quesstion, questionDTO);
         User user = userMapper.selectByPrimaryKey(quesstion.getCreator());
@@ -132,7 +137,10 @@ public class QuestionService {
             QuestionExample example = new QuestionExample();
             example.createCriteria()
                     .andIdEqualTo(question.getId());
-            questionMapper.updateByExampleSelective(updateQuestion, example);
+            int updated = questionMapper.updateByExampleSelective(updateQuestion, example);
+            if (updated != 1){
+                throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+            }
         }
     }
 }
