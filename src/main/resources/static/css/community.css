@@ -14,6 +14,9 @@ body{
     width: 40px;
     height: 40px;
 }
+.media-body{
+    padding: 10px;
+}
 .text-desc{
     font-size: 12px;
     font-weight: normal;
@@ -24,4 +27,11 @@ body{
 }
 .community-menu{
     color: #999;
+}
+.community-comment{
+    margin: 10px 0;
+}
+.community-comment-btn{
+    float: right;
+    margin-bottom: 10px;
 }
